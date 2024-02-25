@@ -4,7 +4,6 @@ import PDFViewer from "@/components/PDFViewer";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
 import { checkSubscription } from "@/lib/subscription";
-import { auth } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -16,11 +15,11 @@ type Props = {
 };
 
 const ChatPage = async ({ params: { chatId } }: Props) => {
-  const { userId } = await auth();
-  if (!userId) {
-    return redirect("/sign-in");
-  }
-  const _chats = await db.select().from(chats).where(eq(chats.userId, userId));
+  // const { userId } = await auth();
+  // if (!userId) {
+  //   return redirect("/sign-in");
+  // }
+  const _chats = await db.select().from(chats).where(eq(chats.userId, "0000"));
   if (!_chats) {
     return redirect("/");
   }
